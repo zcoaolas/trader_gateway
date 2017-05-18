@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by zcoaolas on 2017/5/16.
  */
 
+@CrossOrigin
 @RestController
 public class TraderUserController {
 
@@ -39,10 +40,10 @@ public class TraderUserController {
         return new ResponseEntity<>(ret, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/TraderUser", "/TraderUser/Login"}, method = RequestMethod.OPTIONS)
+    /*@RequestMapping(value = {"/TraderUser", "/TraderUser/Login"}, method = RequestMethod.OPTIONS)
     public ResponseEntity<JSONObject> supportOptions() {
         JSONObject ret = new JSONObject();
         HttpHeaders headers = MyHttpHeader.getHttpHeaders();
         return new ResponseEntity<>(ret, headers, HttpStatus.OK);
-    }
+    }*/
 }
