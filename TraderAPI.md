@@ -53,6 +53,7 @@
   "uo_vol": 350,
   "uo_year": 2018,
   "uo_month": 10,
+  "uo_is_buy": 1,
   "uo_limit_value": "",
   "uo_stop_value": ""
 }
@@ -64,6 +65,7 @@
   "uo_vol": 350,
   "uo_year": 2018,
   "uo_month": 10,
+  "uo_is_buy": 1,
   "uo_limit_value": "3.7%",
   "uo_stop_value": ""
 }
@@ -75,6 +77,7 @@
     "uo_vol": 350,
     "uo_year": 2018,
     "uo_month": 10,
+    "uo_is_buy": 0,
     "uo_limit_value": "",
     "uo_stop_value": "229.6"
 }
@@ -87,13 +90,14 @@
     "o_id": -1,
     "c_id": 2,
     "tu_id": 1,
-    "uo_price: -1,
+    "uo_price": -1,
     "uo_type": "Limit",
     "uo_vol": 350,
     "uo_status": "Placed",
     "uo_create_time": "2017-05-15 22:21:30",
     "uo_year": 2018,
     "uo_month": 10,
+    "uo_is_buy": 1,
     "uo_limit_value": "3.7%",
     "uo_stop_value": ""
 }

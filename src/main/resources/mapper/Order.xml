@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.zc.trader.dao.OrderDao">
+
+    <insert id="createOrder" useGeneratedKeys="true" keyProperty="o_id" parameterType="com.sjtu.zc.trader.model.Order">
+        INSERT INTO
+        `order`(t_id, c_id, o_price, o_vol, o_type, o_status, o_create_time, o_year, o_month, o_is_buy, o_limit_value, o_stop_value)
+        VALUES
+        (#{t_id}, #{c_id}, #{o_price}, #{o_vol}, #{o_type}, #{o_status}, #{o_create_time}, #{o_year}, #{o_month}, #{o_is_buy}, #{o_limit_value}, #{o_stop_value})
+    </insert>
+
+</mapper>

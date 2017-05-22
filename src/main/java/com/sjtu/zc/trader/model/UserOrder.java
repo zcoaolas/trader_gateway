@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -14,7 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserOrder {
+public class UserOrder implements Serializable {
     private Integer uo_id;
     private Integer o_id;
     private Integer c_id;
@@ -26,6 +27,7 @@ public class UserOrder {
     private Timestamp uo_create_time;
     private Integer uo_year;
     private Integer uo_month;
+    private Integer uo_is_buy;
     private String uo_limit_value;
     private String uo_stop_value;
 }

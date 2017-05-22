@@ -4,7 +4,10 @@ import com.sjtu.zc.trader.model.UserOrder;
 
 /**
  * Created by zcoaolas on 2017/5/18.
+ *
+ * UserOrder are orders placed by trader users
  */
 public interface UserOrderService {
-    void createUserOrder(UserOrder userOrder);
+    UserOrder createLocalUserOrder(UserOrder userOrder);
+
 }
