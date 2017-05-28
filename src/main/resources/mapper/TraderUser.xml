@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.zc.trader.dao.TraderUserDao">
+
+    <resultMap id="TraderUserBaseMap" type="com.sjtu.zc.trader.model.TraderUser">
+        <id column="tu_id" property="tu_id" jdbcType="INTEGER"/>
+        <result column="tu_name" property="tu_name" jdbcType="VARCHAR"/>
+        <result column="tu_role" property="tu_role" jdbcType="INTEGER"/>
+        <result column="tu_email" property="tu_email" jdbcType="VARCHAR"/>
+        <result column="tu_password" property="tu_password" jdbcType="VARCHAR"/>
+        <result column="t_id" property="t_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="getTraderUser" resultMap="TraderUserBaseMap" parameterType="java.lang.String">
+        SELECT DISTINCT
+        tu_id, tu_name, tu_role, tu_email, tu_password, t_id
+        FROM
+        trader_user
+        WHERE
+        tu_name = #{tu_name};
+    </select>
+
+    <select id="getAllTraderUsers" resultType="TraderUser">
+        SELECT
+        *
+        FROM
+        trader_user
+    </select>
+
+</mapper>
