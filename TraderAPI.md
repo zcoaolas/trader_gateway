@@ -1,4 +1,4 @@
-## Traveller API
+## Trader Gateway API
 
 /TraderUser/Login POST 
 ---
@@ -110,5 +110,43 @@
 ```
 {
   "message": "Add UserOrder Failed"
+}
+```
+/Commodity/All GET
+---
+> Get all commodities that a trader subscribed 
+
+*success response*
+```
+{
+  "commodities": [
+    {
+      "bu_id": 1,
+      "c_id": 1,
+      "c_name": "gold",
+      "c_price": 225
+    },
+    {
+      "bu_id": 1,
+      "c_id": 2,
+      "c_name": "corn",
+      "c_price": 15.3
+    }
+  ]
+}
+``` 
+
+/Commodity/{c_id}/BrokerUser GET
+---
+> Get the information of BrokerUser that sells a commodity  
+> c_id is the id of a commodity
+
+*success response*
+```
+{
+  "bu_email": "hmcai@sjtu.edu.cn",
+  "bu_id": 1,
+  "bu_name": "caihongming",
+  "bu_password": ""
 }
 ```

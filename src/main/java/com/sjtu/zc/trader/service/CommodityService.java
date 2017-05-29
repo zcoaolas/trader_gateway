@@ -1,6 +1,9 @@
 package com.sjtu.zc.trader.service;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import java.io.IOException;
 
 
 /**
@@ -8,5 +11,8 @@ import net.sf.json.JSONObject;
  */
 public interface CommodityService {
 
-    JSONObject getAvailableCommodities(Integer traderId);
+    JSONObject getAvailableCommodities() throws IOException;
+
+    JSONObject getBrokerUserOfCommodity(Integer c_id) throws IOException ;
+
 }

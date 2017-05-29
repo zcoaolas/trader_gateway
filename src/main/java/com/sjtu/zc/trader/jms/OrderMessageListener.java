@@ -6,6 +6,7 @@ import com.sjtu.zc.trader.service.OrderService;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jms.*;
 
@@ -14,7 +15,7 @@ import javax.jms.*;
  */
 public class OrderMessageListener implements MessageListener {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    @Autowired
     private OrderService orderService;
 
     public void onMessage(Message message) {
