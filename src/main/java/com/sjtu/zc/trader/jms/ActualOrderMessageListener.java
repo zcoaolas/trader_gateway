@@ -26,15 +26,18 @@ public class ActualOrderMessageListener implements MessageListener {
         TextMessage tm = (TextMessage) message;
         try {
             String actualOrderJStr = tm.getText();
-
-            String[] formats={"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd"};
+            System.out.println(actualOrderJStr);
+            /*String[] formats={"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd"};
             JSONUtils.getMorpherRegistry().registerMorpher(new TimestampMorpher(formats));
             JSONObject jsonObject=JSONObject.fromObject(actualOrderJStr);
             ActualOrder actualOrder = (ActualOrder) JSONObject.toBean(jsonObject, ActualOrder.class);
             logger.info("Received ActualOrder {}", actualOrder.toString());
 
             // Forward this ActualOrder to Frontend
-            chatController.actualOrderMessage(actualOrder);
+            chatController.actualOrderMessage(actualOrder);*/
+            JSONObject jsonObject=JSONObject.fromObject(actualOrderJStr);
+            logger.info("Received ActualOrder and MarketDepth {}", actualOrderJStr);
+            chatController.actualOrderMessage(jsonObject);
         }
         catch (JMSException e) {
             //e.printStackTrace();

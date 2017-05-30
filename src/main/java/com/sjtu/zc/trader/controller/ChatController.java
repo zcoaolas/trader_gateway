@@ -1,6 +1,7 @@
 package com.sjtu.zc.trader.controller;
 
 import com.sjtu.zc.trader.model.ActualOrder;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Headers;
@@ -45,7 +46,7 @@ public class ChatController {
 
     @MessageMapping("/chatMessage") //"/hello"为WebSocketConfig类中registerStompEndpoints()方法配置的
     @SendTo("/topic/newmessage")
-    public ActualOrder actualOrderMessage(ActualOrder actualOrder) {
-        return actualOrder;
+    public JSONObject actualOrderMessage(JSONObject actualOrderAndDepth) {
+        return actualOrderAndDepth;
     }
 }

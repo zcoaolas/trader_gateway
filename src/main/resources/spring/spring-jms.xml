@@ -56,7 +56,7 @@
     </bean>
 
     <!-- 消息监听器2 -->
-    <bean id="actualOrderMessageListener"
+    <!--<bean id="actualOrderMessageListener"
           class="com.sjtu.zc.trader.jms.ActualOrderMessageListener" />
     <bean id="jmsContainer3"
           class="org.springframework.jms.listener.DefaultMessageListenerContainer">
@@ -68,5 +68,34 @@
         <constructor-arg>
             <value>queue3</value>
         </constructor-arg>
+    </bean>-->
+
+    <!-- 定义消息主题（Topic） -->
+    <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg>
+            <value>gold_topic</value>
+        </constructor-arg>
     </bean>
+    <!-- 配置JMS模板（Topic），pubSubDomain="true"-->
+    <!--<bean id="topicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="defaultDestination" ref="topicDestination" />
+        <property name="pubSubDomain" value="true" />
+        <property name="receiveTimeout" value="10000" />
+    </bean>-->
+    <!--topic消息发布者 -->
+    <!--<bean id="topicProvider" class="com.heitian.ssm.service.TopicProvider">
+        <property name="topicJmsTemplate" ref="topicJmsTemplate"></property>
+    </bean>-->
+    <!-- 消息主题监听者 和 主题监听容器 可以配置多个，即多个订阅者 -->
+    <!-- 消息主题监听者(Topic) -->
+    <bean id="topicMessageListener" class="com.sjtu.zc.trader.jms.ActualOrderMessageListener"/>
+    <!-- 主题监听容器 （Topic） -->
+    <bean id="topicJmsContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="topicDestination" />
+        <property name="messageListener" ref="topicMessageListener" />
+    </bean>
+
 </beans>

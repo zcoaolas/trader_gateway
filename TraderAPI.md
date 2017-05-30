@@ -207,3 +207,52 @@
   ]
 }
 ``` 
+
+/BrokerUser/All GET
+---
+> Get all brokerUsers in the market
+
+*success response*
+```
+{
+  "brokerUsers": [
+    {
+      "bu_email": "hmcai@sjtu.edu.cn",
+      "bu_id": 1,
+      "bu_name": "caihongming",
+      "bu_password": "caihongming"
+    }
+  ]
+}
+```
+
+/BrokerUser/{bu_id}/Commodities GET
+---
+> Get all commodities a brokerUser sells  
+{bu_id} is the brokerUser id
+
+*success response*
+```
+{
+  "commodities": [
+    {
+      "bu_id": 1,
+      "c_id": 1,
+      "c_name": "gold",
+      "c_price": 80
+    },
+    {
+      "bu_id": 1,
+      "c_id": 2,
+      "c_name": "corn",
+      "c_price": 15.3
+    },
+    {
+      "bu_id": 1,
+      "c_id": 3,
+      "c_name": "crude",
+      "c_price": 100
+    }
+  ]
+}
+```

@@ -48,7 +48,7 @@ public class CommodityServiceImpl implements CommodityService {
         return JSONObject.fromObject(jsonStr);
     }
 
-    private String getConnection(String urlString) throws IOException {
+    public static String getConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
