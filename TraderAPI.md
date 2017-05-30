@@ -86,20 +86,7 @@
 *success response*
 ```
 {
-    "uo_id": 321,
-    "o_id": -1,
-    "c_id": 2,
-    "tu_id": 1,
-    "uo_price": -1,
-    "uo_type": "Limit",
-    "uo_vol": 350,
-    "uo_status": "Placed",
-    "uo_create_time": "2017-05-15 22:21:30",
-    "uo_year": 2018,
-    "uo_month": 10,
-    "uo_is_buy": 1,
-    "uo_limit_value": "3.7%",
-    "uo_stop_value": ""
+    "msg": "Success"
 }
 ```
 
@@ -252,6 +239,87 @@
       "c_id": 3,
       "c_name": "crude",
       "c_price": 100
+    }
+  ]
+}
+```
+
+/MarketDepth/cid=1&year=2018&month=5&isFloat=0 GET
+---
+> Get the current market depth
+
+> Request parameter:  
+cid -> commodity id  
+year -> year  
+month -> month in this year  
+isFloat -> 1 if is floating leg, 0 otherwise
+
+*success response*
+```
+{
+  "c_id": 1,
+  "o_year": 2018,
+  "o_month": 5,
+  "isFloat": 0,
+  "buy": [],
+  "sell": [
+    {
+      "c_id": 1,
+      "former_o_id": 0,
+      "isFloat": 0,
+      "o_create_time": {
+        "date": 23,
+        "day": 2,
+        "hours": 20,
+        "minutes": 51,
+        "month": 4,
+        "nanos": 0,
+        "seconds": 47,
+        "time": 1495543907000,
+        "timezoneOffset": -480,
+        "year": 117
+      },
+      "o_id": 22,
+      "o_is_buy": 0,
+      "o_limit_value": 100,
+      "o_month": 5,
+      "o_price": -1,
+      "o_status": "Part_Completed",
+      "o_stop_value": -1,
+      "o_type": "Limit",
+      "o_vol": 2740,
+      "o_year": 2018,
+      "stop_or_limit_value": 100,
+      "t_id": 1
+    },
+    {
+      "c_id": 1,
+      "former_o_id": 1,
+      "isFloat": 0,
+      "o_create_time": {
+        "date": 30,
+        "day": 2,
+        "hours": 19,
+        "minutes": 54,
+        "month": 4,
+        "nanos": 0,
+        "seconds": 25,
+        "time": 1496145265000,
+        "timezoneOffset": -480,
+        "year": 117
+      },
+      "o_id": 21,
+      "o_is_buy": 0,
+      "o_limit_value": 150,
+      "o_month": 5,
+      "o_price": -1,
+      "o_status": "Placed",
+      "o_stop_value": -1,
+      "o_type": "Limit",
+      "o_vol": 2000,
+      "o_year": 2018,
+      "stop_or_limit_value": 150,
+      "t_id": 1
     }
   ]
 }

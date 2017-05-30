@@ -9,6 +9,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.server.standard.GlassFishRequestUpgradeStrategy;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
+import java.net.URI;
+
 /**
  * Created by john on 2017/4/15 0015.
  */
@@ -18,9 +20,9 @@ public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigur
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry){
-        registry.addEndpoint("/chatRoom").withSockJS();
-        registry.addEndpoint("/chatMessage").withSockJS();
-        registry.addEndpoint("/actualDepth").withSockJS();
+        registry.addEndpoint("/chatRoom").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/chatMessage").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/actualDepth").setAllowedOrigins("*").withSockJS();
     }
 
     @Override

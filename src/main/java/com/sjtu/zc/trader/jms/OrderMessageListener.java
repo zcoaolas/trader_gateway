@@ -21,7 +21,7 @@ public class OrderMessageListener implements MessageListener {
 
     public void onMessage(Message message) {
 
-        TextMessage tm = (TextMessage) message;
+        /*TextMessage tm = (TextMessage) message;
         try {
             String orderStr = tm.getText();
 
@@ -38,7 +38,7 @@ public class OrderMessageListener implements MessageListener {
         } catch (JMSException e) {
             //e.printStackTrace();
             logger.info(this.getClass().getName() + ": " + e.getMessage());
-        }
+        }*/
     }
 
 }
