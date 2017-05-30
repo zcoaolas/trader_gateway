@@ -15,7 +15,9 @@ public interface OrderService {
 
     //void sendOrderMessage(Destination destination, final Order orderMessage);
 
-    void addUserOrder(UserOrder userOrder);
+    void placeUserOrder(UserOrder userOrder);
 
     void updateOrder(Order order);
+    
+    List<Order> getAllOrders();
 }

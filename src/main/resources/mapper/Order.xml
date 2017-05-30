@@ -5,6 +5,22 @@
 
 <mapper namespace="com.sjtu.zc.trader.dao.OrderDao">
 
+    <resultMap id="orderResultMap" type="com.sjtu.zc.trader.model.Order">
+        <id column="o_id" property="o_id"/>
+        <result column="t_id" property="t_id"/>
+        <result column="c_id" property="c_id"/>
+        <result column="o_price" property="o_price"/>
+        <result column="o_vol" property="o_vol"/>
+        <result column="o_type" property="o_type"/>
+        <result column="o_status" property="o_status"/>
+        <result column="o_create_time" property="o_create_time"/>
+        <result column="o_year" property="o_year"/>
+        <result column="o_month" property="o_month"/>
+        <result column="o_is_buy" property="o_is_buy"/>
+        <result column="o_limit_value" property="o_limit_value"/>
+        <result column="o_stop_value" property="o_stop_value"/>
+    </resultMap>
+
     <insert id="createOrder" useGeneratedKeys="true" keyProperty="o_id" parameterType="com.sjtu.zc.trader.model.Order">
         INSERT INTO
         `order`(t_id, c_id, o_price, o_vol, o_type, o_status, o_create_time, o_year, o_month, o_is_buy, o_limit_value, o_stop_value)
@@ -27,5 +43,12 @@
             o_stop_value = #{o_stop_value}
         WHERE o_id = #{o_id}
     </update>
+
+    <select id="getAllOrders" resultMap="orderResultMap">
+        SELECT
+        *
+        FROM
+        `order`
+    </select>
 
 </mapper>

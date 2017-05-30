@@ -150,3 +150,60 @@
   "bu_password": ""
 }
 ```
+
+/Order/All GET
+---
+> Get all orders (not trader order)
+
+*success response*
+```
+{
+  "orders": [
+    {
+      "c_id": 1,
+      "o_create_time": "2017-05-30 00:03:13",
+      "o_id": 20,
+      "o_is_buy": 0,
+      "o_limit_value": "",
+      "o_month": 6,
+      "o_price": -1,
+      "o_status": "Placed",
+      "o_stop_value": "234.99",
+      "o_type": "Limit",
+      "o_vol": 192,
+      "o_year": 2017,
+      "t_id": 1
+    },
+    {
+      "c_id": 1,
+      "o_create_time": "2017-05-30 00:03:13",
+      "o_id": 21,
+      "o_is_buy": 0,
+      "o_limit_value": "-1",
+      "o_month": 5,
+      "o_price": -1,
+      "o_status": "Part_Completed",
+      "o_stop_value": "-1",
+      "o_type": "Market",
+      "o_vol": 175,
+      "o_year": 2018,
+      "t_id": 1
+    },
+    {
+      "c_id": 1,
+      "o_create_time": "2017-05-30 00:49:38",
+      "o_id": 22,
+      "o_is_buy": 1,
+      "o_limit_value": "",
+      "o_month": 5,
+      "o_price": -1,
+      "o_status": "Completed",
+      "o_stop_value": "",
+      "o_type": "Market",
+      "o_vol": 10,
+      "o_year": 2018,
+      "t_id": 1
+    }
+  ]
+}
+``` 

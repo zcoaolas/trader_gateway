@@ -34,7 +34,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         userOrder.setUo_create_time(new Timestamp(System.currentTimeMillis()));
         userOrderDao.createUserOrder(userOrder);
 
-        orderService.addUserOrder(userOrder);
+        orderService.placeUserOrder(userOrder);
 
         return userOrder;
     }

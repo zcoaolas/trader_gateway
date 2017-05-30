@@ -3,6 +3,7 @@ package com.sjtu.zc.trader.jms;
 import com.sjtu.zc.trader.dao.OrderDao;
 import com.sjtu.zc.trader.model.Order;
 import com.sjtu.zc.trader.service.OrderService;
+import com.sjtu.zc.trader.util.Params;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +30,11 @@ public class OrderMessageListener implements MessageListener {
             obj.remove("o_create_time");
             Order order = (Order) JSONObject.toBean(obj, Order.class);
 
-            //Update order in local database when receive a new one
-            orderService.updateOrder(order);
-
-            logger.info(this.getClass().getName() + ": " + order.toString());
+            if (Params.traderId.equals(order.getT_id())) {
+                //Update order in local database when receive a new one
+                orderService.updateOrder(order);
+                logger.info(this.getClass().getName() + ": " + order.toString());
+            }
         } catch (JMSException e) {
             //e.printStackTrace();
             logger.info(this.getClass().getName() + ": " + e.getMessage());
