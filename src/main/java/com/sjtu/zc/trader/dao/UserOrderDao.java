@@ -13,4 +13,6 @@ public interface UserOrderDao {
     void createUserOrder(UserOrder userOrder);
 
     List<UserOrder> getAllUserOrders();
+
+    void updateUserOrder(UserOrder userOrder);
 }

@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserOrder implements Serializable {
     private Integer uo_id;
-    private Integer o_id;
+    private String uo_is_sent;
     private Integer c_id;
     private Integer tu_id;
     private Double uo_price;

@@ -33,17 +33,12 @@ public class ChatController {
         Integer cId = mdObj.getInt("c_id");
         switch (cId) {
             case 1:
-                //goldMessage(obj);
                 template.convertAndSend("/topic/newmessage1", obj);
                 break;
-
             case 2:
-                //cornMessage(obj);
                 template.convertAndSend("/topic/newmessage2", obj);
                 break;
-
             case 3:
-                //crudeMessage(obj);
                 template.convertAndSend("/topic/newmessage3", obj);
                 break;
         }

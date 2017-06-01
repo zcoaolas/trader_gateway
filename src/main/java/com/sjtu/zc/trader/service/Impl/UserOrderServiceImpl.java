@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by zcoaolas on 2017/5/18.
@@ -30,14 +31,19 @@ public class UserOrderServiceImpl implements UserOrderService {
         logger.info(this.getClass().getName() + ": " + userOrder.toString());
 
         userOrder.setUo_price(-1.0);
+        userOrder.setUo_is_sent("Submitted");
         userOrder.setUo_status("Placed");
         userOrder.setUo_create_time(new Timestamp(System.currentTimeMillis()));
         userOrderDao.createUserOrder(userOrder);
 
         orderService.placeUserOrder(userOrder);
 
+        userOrder.setUo_is_sent("Sent");
+        userOrderDao.updateUserOrder(userOrder);
         return userOrder;
     }
 
-
+    public List<UserOrder> getAllUserOrders() {
+        return userOrderDao.getAllUserOrders();
+    }
 }

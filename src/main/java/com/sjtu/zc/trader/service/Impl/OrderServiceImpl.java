@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
                 sendOrderMessage(destination, order);
 
                 uoVol -= r;
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             }
         }
         catch (InterruptedException ie) {

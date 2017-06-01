@@ -71,20 +71,20 @@
     </bean>-->
 
     <!-- 定义消息主题（Topic） -->
-    <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+    <bean id="topicDestination1" class="org.apache.activemq.command.ActiveMQTopic">
         <constructor-arg>
             <value>gold_topic</value>
         </constructor-arg>
     </bean>
     <!-- 消息主题监听者 和 主题监听容器 可以配置多个，即多个订阅者 -->
     <!-- 消息主题监听者(Topic) -->
-    <bean id="topicMessageListener" class="com.sjtu.zc.trader.jms.CompoundMessageListener"/>
+    <bean id="topicMessageListener1" class="com.sjtu.zc.trader.jms.CompoundMessageListener"/>
     <!-- 主题监听容器 （Topic） -->
-    <bean id="topicJmsContainer"
+    <bean id="topicJmsContainer1"
           class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="connectionFactory" />
-        <property name="destination" ref="topicDestination" />
-        <property name="messageListener" ref="topicMessageListener" />
+        <property name="destination" ref="topicDestination1" />
+        <property name="messageListener" ref="topicMessageListener1" />
     </bean>
 
     <!-- 定义消息主题（Topic） -->
@@ -100,5 +100,20 @@
         <property name="connectionFactory" ref="connectionFactory" />
         <property name="destination" ref="topicDestination2" />
         <property name="messageListener" ref="topicMessageListener2" />
+    </bean>
+
+    <!-- 定义消息主题（Topic） -->
+    <bean id="topicDestination3" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg>
+            <value>corn_topic</value>
+        </constructor-arg>
+    </bean>
+    <bean id="topicMessageListener3" class="com.sjtu.zc.trader.jms.CompoundMessageListener"/>
+    <!-- 主题监听容器 （Topic） -->
+    <bean id="topicJmsContainer3"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="topicDestination3" />
+        <property name="messageListener" ref="topicMessageListener3" />
     </bean>
 </beans>

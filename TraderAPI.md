@@ -99,6 +99,49 @@
   "message": "Add UserOrder Failed"
 }
 ```
+
+/UserOrder/All GET
+---
+> Get all orders a traderUser submitted  
+uo_is_sent has 2 status - "Submitted" "Sent"
+```
+{
+  "user_orders": [
+    {
+      "c_id": 1,
+      "tu_id": 1,
+      "uo_create_time": "2017-06-01 20:53:09",
+      "uo_id": 65,
+      "uo_is_buy": 1,
+      "uo_is_sent": "Sent",
+      "uo_limit_value": "",
+      "uo_month": 5,
+      "uo_price": -1,
+      "uo_status": "Placed",
+      "uo_stop_value": "",
+      "uo_type": "Market",
+      "uo_vol": 10,
+      "uo_year": 2018
+    },
+    {
+      "c_id": 1,
+      "tu_id": 1,
+      "uo_create_time": "2017-06-01 20:53:06",
+      "uo_id": 64,
+      "uo_is_buy": 1,
+      "uo_is_sent": "Sent",
+      "uo_limit_value": "",
+      "uo_month": 5,
+      "uo_price": -1,
+      "uo_status": "Placed",
+      "uo_stop_value": "",
+      "uo_type": "Market",
+      "uo_vol": 10,
+      "uo_year": 2018
+    }
+  ]
+}
+```
 /Commodity/All GET
 ---
 > Get all commodities that a trader subscribed 

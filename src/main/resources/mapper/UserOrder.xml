@@ -7,9 +7,52 @@
 
     <insert id="createUserOrder" useGeneratedKeys="true" keyProperty="uo_id" parameterType="com.sjtu.zc.trader.model.UserOrder">
         INSERT INTO
-        user_order(o_id, c_id, tu_id, uo_price, uo_type, uo_vol, uo_status, uo_create_time, uo_year, uo_month, uo_is_buy, uo_limit_value, uo_stop_value)
+        user_order(uo_is_sent, c_id, tu_id, uo_price, uo_type, uo_vol, uo_status, uo_create_time, uo_year, uo_month, uo_is_buy, uo_limit_value, uo_stop_value)
         VALUES
-        (#{o_id}, #{c_id}, #{tu_id}, #{uo_price}, #{uo_type}, #{uo_vol}, #{uo_status}, #{uo_create_time}, #{uo_year}, #{uo_month}, #{uo_is_buy}, #{uo_limit_value}, #{uo_stop_value})
+        (#{uo_is_sent}, #{c_id}, #{tu_id}, #{uo_price}, #{uo_type}, #{uo_vol}, #{uo_status}, #{uo_create_time}, #{uo_year}, #{uo_month}, #{uo_is_buy}, #{uo_limit_value}, #{uo_stop_value})
     </insert>
 
+    <update id="updateUserOrder" parameterType="com.sjtu.zc.trader.model.UserOrder">
+        UPDATE user_order
+        SET uo_is_sent = #{uo_is_sent},
+        c_id = #{c_id},
+        tu_id = #{tu_id},
+        uo_price = #{uo_price},
+        uo_type = #{uo_type},
+        uo_vol = #{uo_vol},
+        uo_status = #{uo_status},
+        uo_create_time = #{uo_create_time},
+        uo_year = #{uo_year},
+        uo_month = #{uo_month},
+        uo_is_buy = #{uo_is_buy},
+        uo_limit_value = #{uo_limit_value},
+        uo_stop_value = #{uo_stop_value}
+        WHERE uo_id = #{uo_id}
+    </update>
+
+
+    <resultMap id="userOrderResultMap" type="com.sjtu.zc.trader.model.UserOrder">
+        <id column="uo_id" property="uo_id"/>
+        <result column="uo_is_sent" property="uo_is_sent"/>
+        <result column="c_id" property="c_id"/>
+        <result column="tu_id" property="tu_id"/>
+        <result column="uo_price" property="uo_price"/>
+        <result column="uo_type" property="uo_type"/>
+        <result column="uo_vol" property="uo_vol"/>
+        <result column="uo_status" property="uo_status"/>
+        <result column="uo_create_time" property="uo_create_time"/>
+        <result column="uo_year" property="uo_year"/>
+        <result column="uo_month" property="uo_month"/>
+        <result column="uo_is_buy" property="uo_is_buy"/>
+        <result column="uo_limit_value" property="uo_limit_value"/>
+        <result column="uo_stop_value" property="uo_stop_value"/>
+    </resultMap>
+
+    <select id="getAllUserOrders" resultMap="userOrderResultMap">
+        SELECT
+        *
+        FROM
+        user_order
+        ORDER BY uo_create_time DESC
+    </select>
 </mapper>
