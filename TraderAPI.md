@@ -44,6 +44,9 @@
 
 > uo_type: "Stop" "Limit" "Cancel" "Market"  
 > uo_status: "Placed" "Cancelled" "PartiallyBought" "PartiallyFinished" "Finished"
+> uo_time_limit: This order must be finished in XXX milliseconds
+> uo_max_order_vol: The maximum volume of the split order
+
 
 *request body*
 ```
@@ -55,7 +58,9 @@
   "uo_month": 10,
   "uo_is_buy": 1,
   "uo_limit_value": "",
-  "uo_stop_value": ""
+  "uo_stop_value": "",
+  "uo_time_limit": 0,
+  "uo_max_order_vol": 90
 }
 ``` 
 ```
@@ -67,7 +72,9 @@
   "uo_month": 10,
   "uo_is_buy": 1,
   "uo_limit_value": "3.7%",
-  "uo_stop_value": ""
+  "uo_stop_value": "",
+  "uo_time_limit": 1500000,
+  "uo_max_order_vol": 150
 }
 ```
 ```
@@ -79,7 +86,9 @@
     "uo_month": 10,
     "uo_is_buy": 0,
     "uo_limit_value": "",
-    "uo_stop_value": "229.6"
+    "uo_stop_value": "229.6",
+    "uo_time_limit": 30000,
+    "uo_max_order_vol": 90
 }
 ```
 
@@ -287,7 +296,7 @@ uo_is_sent has 2 status - "Submitted" "Sent"
 }
 ```
 
-/MarketDepth/cid=1&year=2018&month=5&isFloat=0 GET
+/MarketDepth?cid=1&year=2018&month=5&isFloat=0 GET
 ---
 > Get the current market depth
 
@@ -310,18 +319,7 @@ isFloat -> 1 if is floating leg, 0 otherwise
       "c_id": 1,
       "former_o_id": 0,
       "isFloat": 0,
-      "o_create_time": {
-        "date": 23,
-        "day": 2,
-        "hours": 20,
-        "minutes": 51,
-        "month": 4,
-        "nanos": 0,
-        "seconds": 47,
-        "time": 1495543907000,
-        "timezoneOffset": -480,
-        "year": 117
-      },
+      "o_create_time": "2017-05-30 00:49:38",
       "o_id": 22,
       "o_is_buy": 0,
       "o_limit_value": 100,
@@ -339,18 +337,7 @@ isFloat -> 1 if is floating leg, 0 otherwise
       "c_id": 1,
       "former_o_id": 1,
       "isFloat": 0,
-      "o_create_time": {
-        "date": 30,
-        "day": 2,
-        "hours": 19,
-        "minutes": 54,
-        "month": 4,
-        "nanos": 0,
-        "seconds": 25,
-        "time": 1496145265000,
-        "timezoneOffset": -480,
-        "year": 117
-      },
+      "o_create_time": "2017-05-29 00:49:38",
       "o_id": 21,
       "o_is_buy": 0,
       "o_limit_value": 150,

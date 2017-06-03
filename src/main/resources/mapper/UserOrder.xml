@@ -7,9 +7,9 @@
 
     <insert id="createUserOrder" useGeneratedKeys="true" keyProperty="uo_id" parameterType="com.sjtu.zc.trader.model.UserOrder">
         INSERT INTO
-        user_order(uo_is_sent, c_id, tu_id, uo_price, uo_type, uo_vol, uo_status, uo_create_time, uo_year, uo_month, uo_is_buy, uo_limit_value, uo_stop_value)
+        user_order(uo_is_sent, c_id, tu_id, uo_price, uo_type, uo_vol, uo_status, uo_create_time, uo_year, uo_month, uo_is_buy, uo_limit_value, uo_stop_value, uo_time_limit, uo_max_order_vol)
         VALUES
-        (#{uo_is_sent}, #{c_id}, #{tu_id}, #{uo_price}, #{uo_type}, #{uo_vol}, #{uo_status}, #{uo_create_time}, #{uo_year}, #{uo_month}, #{uo_is_buy}, #{uo_limit_value}, #{uo_stop_value})
+        (#{uo_is_sent}, #{c_id}, #{tu_id}, #{uo_price}, #{uo_type}, #{uo_vol}, #{uo_status}, #{uo_create_time}, #{uo_year}, #{uo_month}, #{uo_is_buy}, #{uo_limit_value}, #{uo_stop_value}, #{uo_time_limit}, #{uo_max_order_vol})
     </insert>
 
     <update id="updateUserOrder" parameterType="com.sjtu.zc.trader.model.UserOrder">
@@ -26,7 +26,9 @@
         uo_month = #{uo_month},
         uo_is_buy = #{uo_is_buy},
         uo_limit_value = #{uo_limit_value},
-        uo_stop_value = #{uo_stop_value}
+        uo_stop_value = #{uo_stop_value},
+        uo_time_limit = #{uo_time_limit},
+        uo_max_order_vol = #{uo_max_order_vol}
         WHERE uo_id = #{uo_id}
     </update>
 
@@ -46,6 +48,8 @@
         <result column="uo_is_buy" property="uo_is_buy"/>
         <result column="uo_limit_value" property="uo_limit_value"/>
         <result column="uo_stop_value" property="uo_stop_value"/>
+        <result column="uo_time_limit" property="uo_time_limit" />
+        <result column="uo_max_order_vol" property="uo_max_order_vol" />
     </resultMap>
 
     <select id="getAllUserOrders" resultMap="userOrderResultMap">

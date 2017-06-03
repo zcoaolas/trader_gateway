@@ -1,6 +1,6 @@
 Actual Order and Market Depth
 --
-> Gold Endpoint: /topic/newmessage  
+> Gold Endpoint: /topic/newmessage1  
 Corn Endpoint: /topic/newmessage2  
 Crude Endpoint: /topic/newmessage3  
 

@@ -33,7 +33,10 @@ public class CommodityServiceImpl implements CommodityService {
     public JSONObject getAvailableCommodities() throws IOException {
         /*return restTemplate.getForObject(Params.brokerURLPrefix + "rest/getCommodityListByTId/" + Params.traderId,
                 JSONObject.class);*/
-        String jsonStr = getConnection(Params.brokerURLPrefix + "rest/getCommodityListByTId/" + Params.traderId);
+        String jsonStr = restTemplate.getForObject(Params.brokerURLPrefix + "rest/getCommodityListByTId/" + Params.traderId,
+                String.class);
+
+        //String jsonStr = getConnection(Params.brokerURLPrefix + "rest/getCommodityListByTId/" + Params.traderId);
         JSONArray ja = JSONArray.fromObject(jsonStr);
         JSONObject commObj = new JSONObject();
         commObj.put("commodities", ja);
@@ -43,12 +46,12 @@ public class CommodityServiceImpl implements CommodityService {
     public JSONObject getBrokerUserOfCommodity(Integer c_id) throws IOException {
         //return restTemplate.getForObject(Params.brokerURLPrefix + "rest/getBrokerUserByCId/" + c_id,
         //       JSONObject.class);
-
-        String jsonStr = getConnection(Params.brokerURLPrefix + "rest/getBrokerUserByCId/" + c_id);
+        String jsonStr = restTemplate.getForObject(Params.brokerURLPrefix + "rest/getBrokerUserByCId/" + c_id, String.class);
+        //String jsonStr = getConnection(Params.brokerURLPrefix + "rest/getBrokerUserByCId/" + c_id);
         return JSONObject.fromObject(jsonStr);
     }
 
-    public static String getConnection(String urlString) throws IOException {
+    /*public static String getConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -61,6 +64,6 @@ public class CommodityServiceImpl implements CommodityService {
         String str = new String(bytes, "UTF-8");
 
         return str;
-    }
+    }*/
 
 }

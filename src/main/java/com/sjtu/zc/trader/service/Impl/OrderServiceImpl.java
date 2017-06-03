@@ -20,9 +20,8 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
 
 /**
  * Created by zcoaolas on 2017/5/22.
@@ -44,36 +43,68 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeUserOrder(UserOrder uo){
+        /*Runnable task = () -> {
+            // When match the criteria, place an order automatically
+            Integer uoVol = uo.getUo_vol();
+            try {
+                while (uoVol > Params.orderVolMax) {
+                    // Random vol
+                    Random random = new Random();
+                    int r = random.nextInt(Params.orderVolMax) % (Params.orderVolMax - Params.orderVolMin + 1) + Params.orderVolMin;
+                    // Split order
+                    Order order = new Order(
+                            null, Params.traderId, uo.getC_id(), uo.getUo_price(), r, uo.getUo_type(), uo.getUo_status(),
+                            uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
+                    );
+                    order = createLocalOrder(order);
+                    sendOrderMessage(destination, order);
 
-        // When match the criteria, place an order automatically
-        Integer uoVol = uo.getUo_vol();
-        try {
-            while (uoVol > Params.orderVolMax) {
-                // Random vol
-                Random random = new Random();
-                int r = random.nextInt(Params.orderVolMax) % (Params.orderVolMax - Params.orderVolMin + 1) + Params.orderVolMin;
-                // Split order
-                Order order = new Order(
-                        null, Params.traderId, uo.getC_id(), uo.getUo_price(), r, uo.getUo_type(), uo.getUo_status(),
-                        uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
-                );
-                order = createLocalOrder(order);
-                sendOrderMessage(destination, order);
-
-                uoVol -= r;
-                Thread.sleep(5000);
+                    uoVol -= r;
+                    Thread.sleep(3000);
+                }
             }
-        }
-        catch (InterruptedException ie) {
-            logger.error(ie.getMessage());
-        }
-        Order o = new Order(
-                null, Params.traderId, uo.getC_id(), uo.getUo_price(), uoVol, uo.getUo_type(), uo.getUo_status(),
-                uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
-        );
-        o = createLocalOrder(o);
-        sendOrderMessage(destination, o);
+            catch (InterruptedException ie) {
+                logger.error(ie.getMessage());
+            }
+            Order o = new Order(
+                    null, Params.traderId, uo.getC_id(), uo.getUo_price(), uoVol, uo.getUo_type(), uo.getUo_status(),
+                    uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
+            );
+            o = createLocalOrder(o);
+            sendOrderMessage(destination, o);
+        };
+        Thread thread = new Thread(task);
+        thread.start();*/
+
+        Runnable task = () -> {
+            // When match the criteria, place an order automatically
+            Integer timeLimit = uo.getUo_time_limit();
+            Integer maxOrderVol = uo.getUo_max_order_vol();
+            Integer uoVol = uo.getUo_vol();
+            Integer splitN = timeLimit/Params.orderInterval + 1;
+            LinkedList<ArrayList<Integer>> splitRes = splitOrder(uoVol, splitN, maxOrderVol);
+            try {
+                for (ArrayList<Integer> timeV: splitRes) {
+                    Integer timeVAll = timeLimit / splitN;
+                    for (int i = 0; i < timeV.size(); i++) {
+                        Order order = new Order(
+                                null, Params.traderId, uo.getC_id(), uo.getUo_price(), timeV.get(i), uo.getUo_type(), uo.getUo_status(),
+                                uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
+                        );
+                        order = createLocalOrder(order);
+                        sendOrderMessage(destination, order);
+                        Thread.sleep(timeVAll / timeV.size());
+                    }
+                }
+            }
+            catch (InterruptedException ie) {
+                logger.error(ie.getMessage());
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
+
 
     @Override
     public void updateOrder(Order order) {
@@ -116,4 +147,47 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }
     }*/
+    private static List<Integer> historyVol = Arrays.asList( 60, 55, 47, 41, 30, 39, 41, 49, 60, 49, 38);
+
+    private LinkedList<ArrayList<Integer>> splitOrder(Integer totalVol, Integer splitN, Integer maxOrderVol) {
+        LinkedList<ArrayList<Integer>> res = new LinkedList<>();
+        for (int i = 0; i < splitN - 1; i++) {
+            ArrayList<Integer> array = new ArrayList<>();
+            Integer v = rangeRandom(totalVol * nthPercent(i, splitN) * 0.9, totalVol * nthPercent(i, splitN) * 1.1);
+            totalVol -= v;
+
+            while (v > maxOrderVol) {
+                Integer vv = rangeRandom(maxOrderVol * 0.8, maxOrderVol * 1.0);
+                array.add(vv);
+                v -= vv;
+            }
+            array.add(v);
+            res.add(array);
+        }
+        // Rest
+        ArrayList<Integer> array = new ArrayList<>();
+        while (totalVol > maxOrderVol) {
+            Integer vv = rangeRandom(maxOrderVol * 0.8, maxOrderVol * 1.0);
+            array.add(vv);
+            totalVol -= vv;
+        }
+        array.add(totalVol);
+        res.add(array);
+        return res;
+    }
+
+    private Double nthPercent(Integer n, Integer totalN) {
+        Double total = 0.0;
+        for (int i = 0; i < totalN; i++) {
+            total += historyVol.get(i);
+        }
+        return historyVol.get(n) / total;
+    }
+
+    private Integer rangeRandom(Double fromVal, Double toVal) {
+        Integer from = (int)Math.round(fromVal);
+        Integer to = (int)Math.round(toVal);
+        Random random = new Random();
+        return random.nextInt(to) % (to - from + 1) + from;
+    }
 }

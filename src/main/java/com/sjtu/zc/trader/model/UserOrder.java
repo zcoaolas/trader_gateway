@@ -30,4 +30,6 @@ public class UserOrder implements Serializable {
     private Integer uo_is_buy;
     private String uo_limit_value;
     private String uo_stop_value;
+    private Integer uo_time_limit;
+    private Integer uo_max_order_vol;
 }
