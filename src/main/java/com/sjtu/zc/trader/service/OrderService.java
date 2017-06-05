@@ -20,4 +20,6 @@ public interface OrderService {
     void updateOrder(Order order);
     
     List<Order> getAllOrders();
+
+    List<Order> getOrdersByUoid(Integer uo_id);
 }

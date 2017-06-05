@@ -13,4 +13,7 @@ public interface UserOrderService {
     UserOrder createLocalUserOrder(UserOrder userOrder);
 
     List<UserOrder> getAllUserOrders();
+
+    List<UserOrder> getCancelableUserOrders();
+
 }

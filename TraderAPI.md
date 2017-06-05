@@ -43,9 +43,9 @@
 > A UserOrder is submitted to the trader.
 
 > uo_type: "Stop" "Limit" "Cancel" "Market"  
-> uo_status: "Placed" "Cancelled" "PartiallyBought" "PartiallyFinished" "Finished"
-> uo_time_limit: This order must be finished in XXX milliseconds
-> uo_max_order_vol: The maximum volume of the split order
+> uo_status: "Placed" "Cancelled" "PartiallyBought" "PartiallyFinished" "Finished"  
+> uo_time_limit: This order must be finished in XXX milliseconds  
+> uo_max_order_vol: The maximum volume of the split order  
 
 
 *request body*
@@ -113,6 +113,8 @@
 ---
 > Get all orders a traderUser submitted  
 uo_is_sent has 2 status - "Submitted" "Sent"
+
+*success response*
 ```
 {
   "user_orders": [
@@ -151,6 +153,66 @@ uo_is_sent has 2 status - "Submitted" "Sent"
   ]
 }
 ```
+
+/UserOrder/Cancelable GET
+---
+> Get all orders that is not fully completed
+
+*success response*
+```
+{
+  "cancelable_user_orders": [
+    {
+      "c_id": 1,
+      "tu_id": 1,
+      "uo_create_time": "2017-06-05 17:08:58",
+      "uo_id": 174,
+      "uo_is_buy": 1,
+      "uo_is_sent": "Sent",
+      "uo_limit_value": "40.3",
+      "uo_max_order_vol": 90,
+      "uo_month": 12,
+      "uo_price": -1,
+      "uo_status": "Placed",
+      "uo_stop_value": "",
+      "uo_time_limit": 1,
+      "uo_type": "Market",
+      "uo_vol": 320,
+      "uo_year": 2018
+    },
+    {
+      "c_id": 1,
+      "tu_id": 1,
+      "uo_create_time": "2017-06-05 16:20:33",
+      "uo_id": 173,
+      "uo_is_buy": 1,
+      "uo_is_sent": "Sent",
+      "uo_limit_value": "40.3",
+      "uo_max_order_vol": 90,
+      "uo_month": 12,
+      "uo_price": -1,
+      "uo_status": "Placed",
+      "uo_stop_value": "",
+      "uo_time_limit": 0,
+      "uo_type": "Market",
+      "uo_vol": 770,
+      "uo_year": 2018
+    }
+  ]
+}
+```
+
+/UserOrder/Cancel?uo_id=174 GET
+---
+> Cancel the userOrder which uo_id is 174
+
+*success response*
+```
+{
+  "msg": "Success"
+}
+```
+
 /Commodity/All GET
 ---
 > Get all commodities that a trader subscribed 

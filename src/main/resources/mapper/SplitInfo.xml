@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.zc.trader.dao.SplitInfoDao">
+
+    <insert id="insertSplitInfo" parameterType="com.sjtu.zc.trader.model.SplitInfo">
+        INSERT INTO
+            split_info(o_id, uo_id)
+        VALUES
+            (#{o_id}, #{uo_id})
+    </insert>
+
+
+    <resultMap id="userOrderResultMap" type="com.sjtu.zc.trader.model.UserOrder">
+        <id column="uo_id" property="uo_id"/>
+        <result column="uo_is_sent" property="uo_is_sent"/>
+        <result column="c_id" property="c_id"/>
+        <result column="tu_id" property="tu_id"/>
+        <result column="uo_price" property="uo_price"/>
+        <result column="uo_type" property="uo_type"/>
+        <result column="uo_vol" property="uo_vol"/>
+        <result column="uo_status" property="uo_status"/>
+        <result column="uo_create_time" property="uo_create_time"/>
+        <result column="uo_year" property="uo_year"/>
+        <result column="uo_month" property="uo_month"/>
+        <result column="uo_is_buy" property="uo_is_buy"/>
+        <result column="uo_limit_value" property="uo_limit_value"/>
+        <result column="uo_stop_value" property="uo_stop_value"/>
+        <result column="uo_time_limit" property="uo_time_limit" />
+        <result column="uo_max_order_vol" property="uo_max_order_vol" />
+    </resultMap>
+    <select id="getCancelableUserOrders" resultMap="userOrderResultMap">
+        SELECT
+            *
+        FROM
+            user_order
+        WHERE
+            uo_id IN
+            (SELECT DISTINCT uo_id
+             FROM split_info
+             WHERE o_id IN (SELECT o_id FROM `order` WHERE o_status = "Placed" OR o_status = "Part_Completed"))
+        ORDER BY uo_create_time DESC
+    </select>
+
+    <resultMap id="orderResultMap" type="com.sjtu.zc.trader.model.Order">
+        <id column="o_id" property="o_id"/>
+        <result column="t_id" property="t_id"/>
+        <result column="c_id" property="c_id"/>
+        <result column="o_price" property="o_price"/>
+        <result column="o_vol" property="o_vol"/>
+        <result column="o_type" property="o_type"/>
+        <result column="o_status" property="o_status"/>
+        <result column="o_create_time" property="o_create_time"/>
+        <result column="o_year" property="o_year"/>
+        <result column="o_month" property="o_month"/>
+        <result column="o_is_buy" property="o_is_buy"/>
+        <result column="o_limit_value" property="o_limit_value"/>
+        <result column="o_stop_value" property="o_stop_value"/>
+    </resultMap>
+    <select id="getOByUO" resultMap="orderResultMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM `order`
+        WHERE
+            o_id IN (SELECT o_id FROM split_info WHERE uo_id = #{uo_id})
+    </select>
+</mapper>

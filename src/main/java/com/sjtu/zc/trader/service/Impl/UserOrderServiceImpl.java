@@ -1,6 +1,8 @@
 package com.sjtu.zc.trader.service.Impl;
 
+import com.sjtu.zc.trader.dao.SplitInfoDao;
 import com.sjtu.zc.trader.dao.UserOrderDao;
+import com.sjtu.zc.trader.model.Order;
 import com.sjtu.zc.trader.model.UserOrder;
 import com.sjtu.zc.trader.service.OrderService;
 import com.sjtu.zc.trader.service.UserOrderService;
@@ -23,6 +25,8 @@ public class UserOrderServiceImpl implements UserOrderService {
     private UserOrderDao userOrderDao;
     @Resource
     private OrderService orderService;
+    @Resource
+    private SplitInfoDao splitInfoDao;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -46,4 +50,9 @@ public class UserOrderServiceImpl implements UserOrderService {
     public List<UserOrder> getAllUserOrders() {
         return userOrderDao.getAllUserOrders();
     }
+
+    public List<UserOrder> getCancelableUserOrders() {
+        return splitInfoDao.getCancelableUserOrders();
+    }
+
 }

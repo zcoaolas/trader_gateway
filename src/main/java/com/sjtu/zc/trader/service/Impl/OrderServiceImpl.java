@@ -1,7 +1,9 @@
 package com.sjtu.zc.trader.service.Impl;
 
 import com.sjtu.zc.trader.dao.OrderDao;
+import com.sjtu.zc.trader.dao.SplitInfoDao;
 import com.sjtu.zc.trader.model.Order;
+import com.sjtu.zc.trader.model.SplitInfo;
 import com.sjtu.zc.trader.model.UserOrder;
 import com.sjtu.zc.trader.service.OrderService;
 import com.sjtu.zc.trader.util.Params;
@@ -35,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderDao orderDao;
     @Resource
+    private SplitInfoDao splitInfoDao;
+    @Resource
     private JmsTemplate jmsTemplate;
     @Autowired
     @Qualifier("queueDestination")
@@ -43,38 +47,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeUserOrder(UserOrder uo){
-        /*Runnable task = () -> {
-            // When match the criteria, place an order automatically
-            Integer uoVol = uo.getUo_vol();
-            try {
-                while (uoVol > Params.orderVolMax) {
-                    // Random vol
-                    Random random = new Random();
-                    int r = random.nextInt(Params.orderVolMax) % (Params.orderVolMax - Params.orderVolMin + 1) + Params.orderVolMin;
-                    // Split order
-                    Order order = new Order(
-                            null, Params.traderId, uo.getC_id(), uo.getUo_price(), r, uo.getUo_type(), uo.getUo_status(),
-                            uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
-                    );
-                    order = createLocalOrder(order);
-                    sendOrderMessage(destination, order);
-
-                    uoVol -= r;
-                    Thread.sleep(3000);
-                }
-            }
-            catch (InterruptedException ie) {
-                logger.error(ie.getMessage());
-            }
-            Order o = new Order(
-                    null, Params.traderId, uo.getC_id(), uo.getUo_price(), uoVol, uo.getUo_type(), uo.getUo_status(),
-                    uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
-            );
-            o = createLocalOrder(o);
-            sendOrderMessage(destination, o);
-        };
-        Thread thread = new Thread(task);
-        thread.start();*/
 
         Runnable task = () -> {
             // When match the criteria, place an order automatically
@@ -92,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
                                 uo.getUo_create_time(), uo.getUo_year(), uo.getUo_month(), uo.getUo_is_buy(), uo.getUo_limit_value(), uo.getUo_stop_value()
                         );
                         order = createLocalOrder(order);
+                        createSplitInfo(new SplitInfo(order.getO_id(), uo.getUo_id()));
                         sendOrderMessage(destination, order);
                         Thread.sleep(timeVAll / timeV.size());
                     }
@@ -116,10 +89,19 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.getAllOrders();
     }
 
+    @Override
+    public List<Order> getOrdersByUoid(Integer uo_id) {
+        return splitInfoDao.getOByUO(uo_id);
+    }
+
 
     private Order createLocalOrder(Order order) {
         orderDao.createOrder(order);
         return order;
+    }
+
+    private void createSplitInfo(SplitInfo si) {
+        splitInfoDao.insertSplitInfo(si);
     }
 
     private void sendOrderMessage(Destination destination, final Order orderMessage) {
